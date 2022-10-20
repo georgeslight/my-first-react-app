@@ -1,4 +1,4 @@
-import { React, useEffect } from 'react';
+import { React, useEffect, useState } from 'react';
 
 import MovieCard from './MovieCard';
 
@@ -16,11 +16,15 @@ const movie1 = {
 };
 
 const App = () => {
+  // This is going to give us access to the set movies setter function
+  const [movies, setMovies] = useState([]);
+
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
     const data = await response.json();
 
-    console.log(data.Search);
+    // This is going to allow us to populate the movies
+    setMovies(data.Search);
   };
 
   useEffect(() => {
@@ -40,9 +44,21 @@ const App = () => {
         <img src={SearchIcon} alt="search" onClick={() => {}}></img>
       </div>
 
-      <div className="container">
-        <MovieCard movie1={movie1} />
-      </div>
+      {movies?.length > 0 ? (
+        <div className="container">
+          {/* Instead of showing only one single card like this:
+          <MovieCard movie1={movie1} />
+          we can open a dynamic block of code en then map over movies by
+          saying:  */}
+          {movies.map((movie) => (
+            <MovieCard movie={movie} />
+          ))}
+        </div>
+      ) : (
+        <div className="empty">
+          <h2>No movies found</h2>
+        </div>
+      )}
     </div>
   );
 };
