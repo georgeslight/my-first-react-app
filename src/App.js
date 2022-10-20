@@ -18,6 +18,7 @@ const movie1 = {
 const App = () => {
   // This is going to give us access to the set movies setter function
   const [movies, setMovies] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
 
   const searchMovies = async (title) => {
     const response = await fetch(`${API_URL}&s=${title}`);
@@ -38,10 +39,15 @@ const App = () => {
       <div className="search">
         <input
           placeholder="Search for movies"
-          value="Superman"
-          onChange={() => {}}
+          value={searchTerm}
+          // the e is coming from the callback function from the event
+          onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <img src={SearchIcon} alt="search" onClick={() => {}}></img>
+        <img
+          src={SearchIcon}
+          alt="search"
+          onClick={() => searchMovies(searchTerm)}
+        ></img>
       </div>
 
       {movies?.length > 0 ? (
