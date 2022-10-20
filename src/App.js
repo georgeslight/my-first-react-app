@@ -29,7 +29,7 @@ const App = () => {
   };
 
   useEffect(() => {
-    searchMovies('Spiderman');
+    searchMovies('man');
   }, []);
 
   return (
@@ -56,8 +56,8 @@ const App = () => {
           <MovieCard movie1={movie1} />
           we can open a dynamic block of code en then map over movies by
           saying:  */}
-          {movies.map((movie) => (
-            <MovieCard movie={movie} />
+          {movies.map((movie, index) => (
+            <MovieCard key={index} movie={movie} />
           ))}
         </div>
       ) : (
